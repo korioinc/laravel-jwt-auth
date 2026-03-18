@@ -3,7 +3,9 @@
 namespace Korioinc\JwtAuth\Commands;
 
 use Illuminate\Console\Command;
+use Korioinc\JwtAuth\Data\Jwt;
 use Korioinc\JwtAuth\Exceptions\InvalidRefreshToken;
+use Korioinc\JwtAuth\Interfaces\RefreshTokenStorageInterface;
 use Korioinc\JwtAuth\Services\AuthService;
 
 class JwtRefreshTestCommand extends Command
@@ -34,7 +36,7 @@ class JwtRefreshTestCommand extends Command
             $authService = app(AuthService::class);
 
             // Get token data before refresh
-            $storage = app(\Korioinc\JwtAuth\Interfaces\RefreshTokenStorageInterface::class);
+            $storage = app(RefreshTokenStorageInterface::class);
             $tokenData = $storage->getData($refreshToken);
 
             if ($tokenData) {
@@ -64,7 +66,7 @@ class JwtRefreshTestCommand extends Command
             $this->line($newTokenData->refreshToken);
 
             // Decode to show payload
-            $jwt = \Korioinc\JwtAuth\Data\Jwt::decode($newTokenData->accessToken);
+            $jwt = Jwt::decode($newTokenData->accessToken);
             $this->newLine();
             $this->info('JWT Payload:');
             $this->line('  Subject (user): '.$jwt->payload->sub);
