@@ -4,7 +4,7 @@ pre-commit:
       glob:
         - "*.php"
         - "**/*.php"
-      run: ./vendor/bin/pint
+      run: composer format
       stage_fixed: true
 
 pre-push:
