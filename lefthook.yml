@@ -1,16 +1,15 @@
 pre-commit:
   commands:
-    format:
+    pint:
       glob:
         - "*.php"
         - "**/*.php"
-      run: composer format
+      run: ./vendor/bin/pint
       stage_fixed: true
 
 pre-push:
   commands:
     analyse:
       run: composer analyse
-
     test:
       run: composer test
